@@ -1,8 +1,7 @@
 const { author, book } = require("../db/models");
 const { Op } = require("sequelize");
 const { baseResponse } = require("../utils/helpers/baseResponse");
-
-
+const yup = require('yup')
 
 class AuthorController {
   static async create(req, res, next) {
@@ -11,7 +10,23 @@ class AuthorController {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
+        createAt:req.body.createAt,
+        updateAt:req.body.updateAt
       });
+
+      const authorSchema = yup.object({
+
+        firstName:yup.string().required(),
+        lastName: yup.string().required(),
+        email: yup.string().required(),
+        createAt: yup.date().default(),
+        updateAt: yup.date().default(),
+      });
+                    
+      authorSchema
+        .isValid(createAuthor)
+        .then((isValid) => console.log(`data book valid? ${isValid}`));
+
 
       return baseResponse({
         success: true,

@@ -22,18 +22,21 @@ class bookController {
                 updateAt:req.body.updateAt
             });
             const bookSchema = yup.object({
-                authorId: joi.number().positive().required().message({
-                    'any.required': 'The `{{#label}}` field is required',
-                    'number.base': 'The `{{#label}}` field must be a number'}),
-                // publisherId: yup.number().positive().required(),
-                title: joi.string().required().message({
-                    'any.required': 'The `{{#label}}` field is required',
-                    'string.base': 'The `{{#label}}` field must be a string'
-                }),
-                // price: yup.string().nullable(),
-                // year: yup.date().default(),
-                // createAt: yup.date().default(),
-                // updateAt: yup.date().default(),
+                // authorId: joi.number().positive().required().message({
+                //     'any.required': 'The `{{#label}}` field is required',
+                //     'number.base': 'The `{{#label}}` field must be a number'}),
+                // // publisherId: yup.number().positive().required(),
+                // title: joi.string().required().message({
+                //     'any.required': 'The `{{#label}}` field is required',
+                //     'string.base': 'The `{{#label}}` field must be a string'
+                // }),
+                authorId:yup.number().positive().require(),
+                publisherId:yup.number().positive().require(),
+                title:yup.string().required(),
+                price: yup.string().nullable(),
+                year: yup.date().default(),
+                createAt: yup.date().default(),
+                updateAt: yup.date().default(),
               });
                             
               bookSchema
@@ -57,6 +60,42 @@ class bookController {
         }
     }
 
+    static async uploadCover(req, res, next) {
+        try {
+          const file = req.file.path;
+          const id = req.params.id;
+    
+          const dataBook = await author.findByPk(id);
+    
+          const dataUrl = {
+            authorId: dataBook.dataValues.authorId,
+            publisherId: dataBook.dataValues.publisherId,
+            title: dataBook.dataValues.title,
+            price:dataBook.dataValues.price,
+            year:dataBook.dataValues.year,
+            foto: file,
+          };
+          if (dataBook) {
+            const dataUpdate = await book.update(dataUrl, {
+              where: {
+                id: id,
+              },
+            });
+            const dataBook = await author.findByPk(id);
+            return baseResponse({
+              success: true,
+              message: "success",
+              data: dataBook,
+            })(res, 201);
+          }
+          return (
+            baseResponse({ success: false, message: "data tidak ada", data: [] }),
+            (res, 200)
+          );
+        } catch (error) {
+          next(error);
+        }
+      }
 
     static async getAll(req, res) {
         try {

@@ -1,7 +1,7 @@
 
 const { publisher, book } = require("../db/models");
 const { Op } = require("sequelize")
-const joi = require('joi')
+const yup = require('yup')
 
 class publisherController {
     static async create(req, res) {
@@ -11,17 +11,18 @@ class publisherController {
                 address: req.body.address,
                 email: req.body.email,
                 phone: req.body.phone,
-                website: req.body.website
+                website: req.body.website,
+                createAt:req.body.createAt,
+                updateAt:req.body.updateAt
+                
             });
             const publishSchema = joi.object({
-                authorId: joi.number().positive().required().message({
-                    'any.required': 'The `{{#label}}` field is required',
-                    'number.base': 'The `{{#label}}` field must be a number'
-                }),
-                publisherId: joi.number().positive().required(),
-                title: yup.string().required(),
-                price: yup.string().nullable(),
-                year: yup.date().default(),
+
+                name: yup.string().required(),
+                address: yup.string().required(),
+                email : yup.string().required(),
+                phone: yup.number().required(),
+                website: yup.string().required(),
                 createAt: yup.date().default(),
                 updateAt: yup.date().default(),
               });
