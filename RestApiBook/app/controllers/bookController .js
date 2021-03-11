@@ -1,6 +1,12 @@
 
 const { book } = require("../db/models");
-const { Op } = require("sequelize")
+const { Op } = require("sequelize");
+const { baseResponse } = require("../utils/helpers/baseResponse");
+const { uploadCover } = require("../utils/helpers/uploadFoto")
+const { bookSchema } = require("../utils/helpers/validation")
+const { validateResource } = require("../utils/middleware/validator")
+const yup = require('yup')
+const joi = require('joi')
 
 
 class bookController {
@@ -11,14 +17,36 @@ class bookController {
                 publisherId: req.body.publisherId,
                 title: req.body.title,
                 price: req.body.price,
-                year: req.body.year
+                year: req.body.year,
+                createAt:req.body.createAt,
+                updateAt:req.body.updateAt
             });
+            const bookSchema = yup.object({
+                authorId: joi.number().positive().required().message({
+                    'any.required': 'The `{{#label}}` field is required',
+                    'number.base': 'The `{{#label}}` field must be a number'}),
+                // publisherId: yup.number().positive().required(),
+                title: joi.string().required().message({
+                    'any.required': 'The `{{#label}}` field is required',
+                    'string.base': 'The `{{#label}}` field must be a string'
+                }),
+                // price: yup.string().nullable(),
+                // year: yup.date().default(),
+                // createAt: yup.date().default(),
+                // updateAt: yup.date().default(),
+              });
+                            
+              bookSchema
+                .isValid(createBook)
+                .then((isValid) => console.log(`data book valid? ${isValid}`));
+
             const payload = {
                 succes: true,
                 message: "success create new book",
                 data: createBook,
             };
             return res.status(201).json(payload);
+
         } catch (error) {
             const payloadError = {
                 success: false,
