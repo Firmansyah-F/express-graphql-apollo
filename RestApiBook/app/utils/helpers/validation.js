@@ -2,7 +2,7 @@ const yup = require('yup')
 
 
 const bookSchema = yup.object({
-  id: yup.number().integer().positive().required(),
+
   authorId: yup.number().integer().positive().required(),
   publisherId: yup.number().integer().positive().required(),
   title: yup.string().required(),
@@ -10,5 +10,11 @@ const bookSchema = yup.object({
   year: yup.date().required(),
 });
 
+let loginSchema = yup.object({
+  email: yup.string().required(),
+  password : yup.string().required()
 
-module.exports = { bookSchema }
+})
+
+
+module.exports = { bookSchema, loginSchema }

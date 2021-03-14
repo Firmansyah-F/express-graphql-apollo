@@ -4,9 +4,9 @@ const validateResource = (resourceSchema) => async (req, res, next) => {
       // throws an error if not valid
       await resourceSchema.validate(resource);
       next();
-    } catch (e) {
-      console.error(e);
-      res.status(400).json({ error: e.errors.join(', ') });
+    } catch (error) {
+      res.status(400),
+      next(error)
     }
   };
   
