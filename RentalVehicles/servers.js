@@ -6,6 +6,7 @@ const { router: routerVehicle } = require("./app/routers/vehicle");
 const { router: routerType } = require("./app/routers/type");
 const { router: routerUser } = require("./app/routers/user");
 const { router: routerAuth } = require("./app/routers/auth");
+const { router: routerRental } = require("./app/routers/rental");
 const { errorHandler } = require("./app/utils/middleware/errorHandling");
 const { logger } = require("./app/utils/middleware/morgan");
 const morgan = require("morgan");
@@ -53,6 +54,7 @@ router.use("/api/v3", [
   routerType,
   routerUser,
   routerAuth,
+  routerRental
 ]);
 app.use(router);
 

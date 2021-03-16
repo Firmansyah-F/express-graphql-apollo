@@ -8,7 +8,7 @@ const { vehicleSchema } = require("../utils/helpers/validation");
 
 router
   .route("/vehicles")
-  .get(verifikasiJwt, VehicleController.getAll)
+  .get(verifikasiJwt,permit("admin","guest"), VehicleController.getAll)
   .post(
     verifikasiJwt,
     permit("admin"),
@@ -28,7 +28,7 @@ router
 
 router
   .route("/vehicles/:id")
-  .get(verifikasiJwt, VehicleController.getById)
+  .get(verifikasiJwt, permit("admin","guest"),VehicleController.getById)
 
 router
   .route("/vehicles/:id")

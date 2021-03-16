@@ -7,12 +7,13 @@ const { typeSchema } = require("../utils/helpers/validation");
 
 router
   .route("/types")
-  .get(verifikasiJwt, TypeController.getAll)
+  .get(verifikasiJwt, permit("admin","guest"),TypeController.getAll)
   .post(verifikasiJwt, permit("admin"), validateResource(typeSchema), TypeController.create);
+
+router.route("/types/:id/vehicles").get(verifikasiJwt, permit("admin","guest"),TypeController.getById)
 
 router
   .route("/types/:id")
-  .get(verifikasiJwt, TypeController.getById)
   .put(verifikasiJwt, permit("admin"), validateResource(typeSchema), TypeController.update)
   .delete(verifikasiJwt, permit("admin"), TypeController.delete);
 

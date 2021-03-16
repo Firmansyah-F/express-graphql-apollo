@@ -3,21 +3,21 @@ const faker = require("faker");
 faker.locale = "id_ID"; // localization Indonesia
 
 
-const user = [...Array(10)].map((user) => {
+const rental = [...Array(10)].map((rental) => {
     return {
-        fullname : faker.name.findName(),
-        username : faker.name.firstName(),
-        email : faker.internet.exampleEmail(),
-        password : faker.internet.password(),
-        role : "guest",
+        userId : faker.random.number({min:1,max:10}),
+        vehicleId : faker.random.number({min:1,max:10}),
+        startAt : faker.date.recent(),
+        backAt : faker.date.soon(),
+        status : "progres",
         createdAt: faker.date.recent(),
         updatedAt: faker.date.recent(),
     };
 });
-
+    
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // await queryInterface.bulkInsert("users",user)
+    await queryInterface.bulkInsert("rentals",rental)
     /**
      * Add seed commands here.
      *

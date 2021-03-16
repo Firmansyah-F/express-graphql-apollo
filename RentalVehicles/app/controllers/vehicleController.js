@@ -9,7 +9,7 @@ class VehicleController {
         typeId: req.body.typeId,
         hourlyPrice: req.body.hourlyPrice,
         licensePlate: req.body.licensePlate,
-        status: req.body.status,
+        status: "off",
       });
       return baseResponse({
         success: true,
@@ -24,6 +24,22 @@ class VehicleController {
   static async getAll(req, res, next) {
     try {
 
+      // if (Object.keys(req.query).length !== 0){
+
+        if (req.query.status) {
+            const vehicleStatus = await vehicle.findAll({
+                where: {
+                    status: ["rent","off"] 
+                }
+            });
+    
+            const payload = {
+                succes: true,
+                message: "success get vehicle status",
+                data: vehicleStatus,
+            };
+            return res.json(payload)
+        }
       const getVehicles = await vehicle.findAll();
       return baseResponse({
         success: true,
@@ -34,6 +50,8 @@ class VehicleController {
       next(error);
     }
   }
+  
+
   static async uploadVehicle(req, res, next) {
     try {
       const file = req.file.path;

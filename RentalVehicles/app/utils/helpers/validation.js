@@ -22,8 +22,7 @@ const vehicleSchema = yup.object({
       (value + "").match(/^\d*\.{1}\d*$/)
     )
     .required(),
-  licensePlate: yup.string().required(),
-  status: yup.string().required(),
+  licensePlate: yup.string().required()
 });
 
 let loginSchema = yup.object({

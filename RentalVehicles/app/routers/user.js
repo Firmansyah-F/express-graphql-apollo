@@ -8,7 +8,7 @@ const { userSchema } = require("../utils/helpers/validation");
 
 router
   .route("/users")
-  .get(verifikasiJwt,UserController.getAll)
+  .get(verifikasiJwt,permit("admin","guest"),UserController.getAll)
   .post(verifikasiJwt ,permit("admin"),validateResource(userSchema), UserController.create);
 
 router
@@ -21,7 +21,7 @@ router
 
 router
   .route("/users/:id")
-  .get(verifikasiJwt,UserController.getById)
+  .get(verifikasiJwt,permit("admin","guest"), UserController.getById)
   .put(verifikasiJwt, permit("admin"), validateResource(userSchema), UserController.update)
   .delete(verifikasiJwt, permit("admin"), UserController.delete);
 module.exports = { router };
