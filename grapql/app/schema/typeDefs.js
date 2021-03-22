@@ -1,24 +1,24 @@
 const { gql } = require("apollo-server-express");
 const typeDefs = gql`
 type Query {
-    writers: [writers]
-    books: [books]
-    categories: [categories]
+    writers: [writer]
+    books: [book]
+    categories: [category]
   }
-  type writers {
+  type writer {
     id: Int
     fullname: String
     email: String
     photo: String
   }
-  type books {
+  type book {
     id: Int
     writeId: Int
     categoryId: Int
     title: String
     description: String
   }
-  type categories {
+  type category {
     id: Int
     category: String
   }
@@ -30,40 +30,40 @@ type Query {
       categoryId: Int
       title: String
       description: String
-    ): books
+    ): book
     updateBook(
       id: Int
       writeId: Int
       categoryId: Int
       title: String
       description: String
-    ): books
+    ): book
 
-    deleteBook(id: Int): books
+    deleteBook(id: Int): book
 
     # Write
 
     createWriter(
       fullname: String, 
       email: String, 
-      photo: String): writers
+      photo: String): writer
 
     updateWriter(
       id: Int
       fullname: String
       email: String
       photo: String
-    ): writers
-    deleteWriter(id: Int): writers
+    ): writer
+    deleteWriter(id: Int): writer
 
     # Category
 
     createCategory(
-      category: String): categories
+      category: String): category
     updateCategory(
-      id: Int, category: String): categories
+      id: Int, category: String): category
     deleteCategory(
-      id: Int): categories
+      id: Int): category
   }
 
 `;
