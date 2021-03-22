@@ -1,0 +1,45 @@
+{
+    "books": [
+      {
+        "id": 1,
+        "writerId" : 1,
+        "categoryId": 1,
+        "title": "diamond",
+        "description": "mineral book",
+        "photo": ""
+      },
+      {
+        "id": 2,
+        "writerId" : 2,
+        "categoryId": 2,
+        "title": "magnet",
+        "description": "mineral book",
+        "photo": ""
+      }
+    ],
+
+    "writers": [
+      {
+        "id": 1,
+        "full_name" : "nagato",
+        "email": "zz@mail.com",
+        "photo": ""
+      },
+      {
+        "id": 2,
+        "full_name" : "pein",
+        "email": "qq@mail.com",
+        "photo": ""
+      }
+    ],
+    "categories": [
+      {
+        "id": 1,
+        "category":"sciece"
+      },
+      {
+        "id": 2,
+        "category": "ipa"
+      }
+    ]
+  }
