@@ -28,9 +28,9 @@ const resolvers = {
             .then((res) => res.data);
         },
 
-        async findWriterbyId(parentValue, args) {
-          return axios.get(`${server}/writers/${args.id}`).then((res) => res.data);
-        },
+        // async findWriterbyId(parentValue, args) {
+        //   return axios.get(`${server}/writers/${args.id}`).then((res) => res.data);
+        // },
 
         async updateWriter(parentValue, args) {
           return axios.put(`${server}/writers/${args.id}`, args)
@@ -56,11 +56,11 @@ const resolvers = {
           .then((res) => res.data);
       },
     },
-    findBookbyId: {
-      resolve(parentValue, args) {
-        return axios.get(`${server}/books/${args.id}`).then((res) => res.data);
-      },
-    },
+    // findBookbyId: {
+    //   resolve(parentValue, args) {
+    //     return axios.get(`${server}/books/${args.id}`).then((res) => res.data);
+    //   },
+    // },
     updateBook: {
       resolve(parentValue, args) {
         return axios.put(`${server}/books/${args.id}`, args)
